@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>STREETGAMES — Admin</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="./config.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="./app.js" defer></script>
+</head>
+<body class="page-admin" data-page="admin">
+
+  <section id="authCard" class="keyGate">
+    <div class="keyGate__card">
+      <div class="keyGate__title">Admin Login</div>
+      <div class="keyGate__text">Log in with your approved Streetgames admin email before adding, uploading, editing, or deleting products.</div>
+      <input id="loginEmail" class="keyGate__input" type="email" placeholder="Admin email" autocomplete="email" />
+      <input id="loginPassword" class="keyGate__input" type="password" placeholder="Password" autocomplete="current-password" />
+      <button id="loginBtn" class="btn btn--solid btn--wide" type="button">LOGIN</button>
+      <div id="authMsg" class="keyGate__hint"></div>
+      <div class="keyGate__hint">Access is controlled by Supabase Auth + RLS, not just this login screen.</div>
+    </div>
+  </section>
+
+  <div id="adminApp" class="adminWrap" hidden>
+    <div class="adminTop">
+      <div>
+        <div class="adminTitle">Admin</div>
+        <div class="adminSub">Add / edit products (supports multi-image).</div>
+        <div id="adminUser" class="adminSub"></div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <a class="btn btn--ghost" href="./shop.html">Go to Shop</a>
+        <button id="logoutBtn" class="btn btn--ghost" type="button">Logout</button>
+      </div>
+    </div>
+
+    <section class="adminCard">
+      <h3 class="adminCard__title">Add product</h3>
+
+      <div class="adminGrid">
+        <input id="aName" class="input" placeholder="Name" />
+        <input id="aPrice" class="input" placeholder="Price (e.g. 38)" inputmode="decimal" />
+        <input id="aCode" class="input" placeholder="Code (e.g. Premium 23)" />
+        <input id="aSku" class="input" placeholder="SKU (unique recommended)" />
+
+        <select id="aCategory" class="input">
+          <option value="CLOSED CAPS">Closed Caps</option>
+          <option value="A-FRAME CAPS">A-Frame Caps</option>
+        </select>
+
+
+        <input id="aPricingGroup" type="hidden" value="NONE" />
+
+        <input id="aSizes" class="input" placeholder="Sizes (optional, e.g. 7, 7 1/8, 7 1/4)" />
+
+        <select id="aStatus" class="input">
+          <option value="active">active</option>
+          <option value="inactive">inactive</option>
+        </select>
+
+        <label class="checkRow">
+          <input id="aSoldOut" type="checkbox" />
+          <span>Sold out</span>
+        </label>
+      </div>
+
+      <div class="adminMedia">
+        <div class="adminMedia__title">Images (upload 1–3+ OR paste URLs)</div>
+
+        <div class="adminMedia__row">
+          <input id="aImageUrl" class="input" placeholder="Paste image URL then click Add URL" />
+          <button id="addUrlBtn" class="btn btn--ghost" type="button">Add URL</button>
+        </div>
+
+        <div class="adminMedia__row">
+          <input id="aFiles" class="input" type="file" accept="image/*" multiple />
+          <button id="uploadFilesBtn" class="btn btn--ghost" type="button">Upload selected</button>
+        </div>
+
+        <div id="imgList" class="imgList"></div>
+      </div>
+
+      <button id="createProductBtn" class="btn btn--solid btn--wide" type="button">Create product</button>
+      <div id="adminMsg" class="adminMsg"></div>
+    </section>
+
+    <section class="adminCard">
+      <h3 class="adminCard__title">Products</h3>
+      <div id="adminProducts" class="adminProducts"></div>
+    </section>
+  </div>
+
+</body>
+</html>
